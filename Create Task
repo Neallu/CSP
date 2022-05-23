@@ -1,0 +1,54 @@
+var allNumbers = [];
+var number;
+
+//Maximum function
+//Find the largest number from an list of numbers
+//list {list} - the list of items
+//return {number} - the largest number in the list
+function FindMax(list) {
+  var maxNumber = list[0];
+  for (var i = 0; i < list.length; i++) {
+   if (list[i]>maxNumber) {
+     maxNumber = list[i];
+   }
+  }
+  return maxNumber;
+}
+console.log("Here are the largest numbers in your list:");
+//Test for max
+console.log(FindMax([6,2,3]));
+console.log(FindMax([34,2,443]));
+console.log(FindMax([55,4324,11111]));
+console.log(FindMax([-1,-2,-3]));
+//Minimum Function
+//Finds the smallest number from an list of numbers
+//list{list}- the list of items
+//return{number}- the smallest number in the list
+function FindMin(list) {
+  var minNumber = list[0];
+  for (var i = 0; i < list.length; i++) {
+    if (list[i] < minNumber) {
+      minNumber = list[i];
+    }
+  }
+  return minNumber;
+}
+//Test for Min
+console.log("Here are the smallest numbers in your list:");
+console.log(FindMin([1,2,3]));
+console.log(FindMin([-1,-4,-100]));
+console.log(FindMin([0,10,-1]));
+
+onEvent("button1", "click", function(){
+  number = getNumber("user_input");
+  appendItem(allNumbers, number);
+  setText("number_output", allNumbers);
+});
+
+onEvent("button2", "click", function(){ //findMin
+    setText("number_output", FindMin(allNumbers));
+});
+
+onEvent("button3", "click", function(){ //findMax
+    setText("number_output", FindMax(allNumbers));
+});
