@@ -1,0 +1,240 @@
+var namesList = getColumn("US National Parks", "Name");
+var namesFiltered = [];
+
+var imagesList = getColumn("US National Parks", "Image");
+var locationsList = getColumn("US National Parks", "Location");
+var sizesList = getColumn("US National Parks", "Area in acres");
+var sizesFiltered = [];
+
+var visitorsList = getColumn("US National Parks", "Recreation visitors in 2019");
+var visitorsFiltered = [];
+var descriptionsList = getColumn("US National Parks", "Description");
+var datesList = getColumn("US National Parks", "Date established");
+var datesFiltered = [];
+var park;
+var description;
+var rankType;
+var y = [];
+var z = [];
+for(var i=0; i<namesList.length; i++){
+  namesFiltered[i] = namesList[i];
+}
+for(i=0; i<sizesList.length; i++){
+  sizesFiltered[i] = sizesList[i];
+}
+
+for(i=0; i<visitorsList.length; i++){
+  visitorsFiltered[i] = visitorsList[i];
+}
+for(i=0; i<datesList.length; i++){
+  datesFiltered[i] = datesList[i];
+}
+/* TEST
+var cats = ["cat1", "cat2", "cat3"];
+var othercats = [];
+for(var i = 0; i<cats.length; i++){
+  othercats[i] = cats[i];
+}
+
+appendItem(othercats, "cat4");
+
+console.log(cats);
+console.log(othercats);
+*/
+
+//Navigating Screens (Buttons)
+onEvent("homeButton1", "click", function(){
+  setScreen("titleScreen");
+  clearScreen();
+});
+
+onEvent("homeButton2", "click", function(){
+  setScreen("titleScreen");
+  clearScreen();
+});
+onEvent("homeButton3", "click", function(){
+  setScreen("titleScreen");
+  clearScreen();
+});
+onEvent("backArrow", "click", function(){
+  setScreen("rankedScreen");
+});
+
+onEvent("randomScreenButton", "click", function(){
+  setScreen("randomScreen");
+  setProperty("rankDropdown", "text", "Choose a Ranking");
+  
+});
+onEvent("rankedScreenButton", "click", function(){
+  setScreen("rankedScreen");
+});
+
+//random screen button
+onEvent("randomizeButton", "click", function(){
+  updateRandomScreen();
+});
+
+//ranking screen dropdown
+onEvent("rankDropdown", "change", function(){
+  console.log("Change");
+  rankType = getText("rankDropdown");
+  for(i=0; i<namesList.length; i++){
+    namesFiltered[i] = namesList[i];
+  }
+  for(i=0; i<sizesList.length; i++){
+    sizesFiltered[i] = sizesList[i];
+  }
+
+  for(i=0; i<visitorsList.length; i++){
+   visitorsFiltered[i] = visitorsList[i];
+  }
+  for(i=0; i<datesList.length; i++){
+    datesFiltered[i] = datesList[i];
+  }
+  console.log(namesFiltered);
+  updateRankScreen();
+  for(var x = 1; x<=5; x++){
+      pickPark(x);
+    }
+});
+
+//Use to update the properties of design elements on different screens
+function updateScreen(screen){
+  setProperty(screen + "Screen" + "Name", "text", park);
+  setProperty(screen + "Image", "image", image);
+  setProperty(screen + "Location", "text", location);
+  setProperty(screen + "Description", "text", description);
+}
+
+//When you click the randomize button, displays info of a random park
+function updateRandomScreen(){
+  var randomPark = randomNumber(0, namesList.length-1);
+  var random = "random";
+  assignInfo(randomPark);
+  updateScreen(random);
+}
+
+//Changes the ranking of the top 5 parks based on what ranking is 
+//picked in the dropdown
+function updateRankScreen(){
+  //Option 1
+  if(rankType == "Number Of Visitors"){
+    sortNumerically(namesFiltered, visitorsFiltered, y, z);
+    console.log(namesFiltered);
+    console.log(visitorsFiltered);
+    updateRank(visitorsFiltered);
+    //console.log(visitorsList);
+    for(var x = 1; x<=5; x++){
+      pickPark(x);
+    }
+  } 
+  //Option 2
+  if(rankType == "Size"){
+    sortNumerically(namesFiltered, sizesFiltered, y, z);
+    updateRank(sizesFiltered);
+    console.log(namesFiltered);
+    console.log(sizesFiltered);
+    
+    for(x = 1; x<=5; x++){
+      pickPark(x);
+    }
+  }
+  
+  //Option 3
+  if(rankType == "Oldest"){
+    var yearsList = [];
+    var monthsList = [];
+    var daysList = [];
+    //console.log(datesList);
+    for(var i=0; i<datesList.length; i++){
+      yearsList[i] = datesList[i].slice(datesList[i].length-4);
+      monthsList[i] = datesList[i].substring(0, datesList[i].indexOf(' '));
+      daysList[i] = datesList[i].substring(datesList[i].indexOf(' ')+1, datesList[i].lastIndexOf(' ')-1);
+    }
+    sortNumerically(namesFiltered, yearsList, monthsList, datesFiltered);
+    console.log(yearsList);
+    console.log(monthsList);
+    console.log(daysList);
+    datesFiltered = datesFiltered.reverse();
+    updateRank(datesFiltered);
+    for(x = 1; x<=5; x++){
+      pickPark(x);
+    }
+    
+  }
+}
+
+
+
+//Stores information for a specific park as variables
+function assignInfo(info){
+  park = "Name: " + namesList[info] + " National Park";
+  image = imagesList[info];
+  location = "Location: " + locationsList[info];
+  description = "Description: " + descriptionsList[info];
+}
+
+//sorts the list of park names based on what information passed to use for comparison
+function sortNumerically(names, array1, array2, array3){
+  var temp;
+  var temp2;
+  var temp3;
+  var temp4;
+  for(var i = 0; i < array1.length; i++){
+      for(var j = 0; j < array1.length-1; j++){
+        if(array1[j] < array1[i]){
+          temp = array1[i];
+          temp2 = names[i];
+          temp3 = array2[i];
+          temp4 = array3[i];
+          array1[i] = array1[j];
+          names[i] = names[j];
+          array2[i] = array2[j];
+          array3[i] = array3[j];
+          array1[j] = temp;
+          names[j] = temp2;
+          array2[j] = temp3;
+          array3[j] = temp4;
+        }
+      }
+    }
+}
+
+//updates the ranking screen when the user chooses something from the dropdown
+function updateRank(ranking){
+  for(var i = 0; i<5; i++){
+    setProperty("topPark" + (i+1), "text", namesFiltered[i]);
+    setProperty("parkText" + (i+1), "text", ranking[i]);
+  }
+}
+
+//When the user clicks the name of a park, brings up an info screen about it
+function pickPark(number){
+  var screen = "park_";
+  var pick =  getText("topPark"+number);
+  console.log(number);
+  onEvent("topPark"+number, "click", function(){
+    for(var i = 0; i<namesList.length-1; i++){
+      if( pick == namesList[i]){
+        console.log(pick);
+        console.log(namesList[i]);
+        console.log(i);
+        assignInfo(i);
+        setScreen("parkScreen");
+        updateScreen(screen);
+      }
+    }
+  });
+}
+
+function clearScreen(){
+  setProperty("randomScreenName", "text", "Name: ");
+  setProperty("randomLocation", "text", "Location: ");
+  setProperty("randomDescription","text", "Description: ");
+  setProperty("rankDropdown", "index", 0);
+  setProperty("randomImage", "image", "https://upload.wikimedia.org/wikipedia/commons/thumb/a/a9/NationalParks.forwiki.pdf/page1-350px-NationalParks.forwiki.pdf.jpg");
+  for(var i = 0; i<5; i++){
+    setProperty("topPark" + (i+1), "text", "Park " + (i+1) + ":");
+    setProperty("parkText" + (i+1), "text", " ");
+  }
+}
