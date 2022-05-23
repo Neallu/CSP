@@ -1,0 +1,56 @@
+//Maximum function
+//Find the largest number from an list of numbers
+//list {list} - the list of items
+//return {number} - the largest number in the list
+function FindMax(list) {
+  var maxNumber = list[0];
+  for (var i = 0; i < list.length; i++) {
+   if (list[i]>maxNumber) {
+     maxNumber = list[i];
+   }
+  }
+  return maxNumber;
+}
+console.log("Here are the largest numbers in your list:");
+//Test for max
+console.log(FindMax([6,2,3]));
+console.log(FindMax([34,2,443]));
+console.log(FindMax([55,4324,11111]));
+console.log(FindMax([-1,-2,-3]));
+//Minimum Function
+//Finds the smallest number from an list of numbers
+//list{list}- the list of items
+//return{number}- the smallest number in the list
+function FindMin(list) {
+  var minNumber = list[0];
+  for (var i = 0; i < list.length; i++) {
+    if (list[i] < minNumber) {
+      minNumber = list[i];
+    }
+  }
+  return minNumber;
+}
+//Test for Min
+console.log("Here are the smallest numbers in your list:");
+console.log(FindMin([1,2,3]));
+console.log(FindMin([-1,-4,-100]));
+console.log(FindMin([0,10,-1]));
+//Count Function
+//From an list, the program counts the total time a number appears
+//list{list}- the list of items
+//value{number}- the number that the program is looking for from the list 
+//return{number}-the amount of times the value appears 
+function Count(list, value) {
+  var Total=0;
+  for (var i = 0; i < list.length; i++) {
+    if (list[i]==value) {
+      Total = Total + 1;
+    }
+  }
+  return Total;
+}
+//Test for Count
+console.log("Here are the total count:");
+console.log(Count([24,24,24,5,5,9], 5));
+console.log(Count([23,21,100,100,20,22], 0));
+console.log(Count([-1, -1, -1, 0, 1, 2], -1));
