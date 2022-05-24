@@ -1,0 +1,82 @@
+//Switch from the homeScreen to the componentsScreen and play music while on that screen.
+onEvent("componentsButton", "click", function( ) {
+setScreen("componentsScreen");
+setProperty("componentsButton","border-width",2);
+setProperty("computerprogrammingButton","border-width",0);
+setProperty("benefitsandrisksButton","border-width",0);
+
+playSound("angel-piano-main-9625.mp3");
+});
+//Switch from the homeScreen to the computerprogrammingScreen and play music while on that screen.
+onEvent("computerprogrammingButton", "click", function( ) {
+setScreen("computerprogrammingScreen");
+setProperty("componentsButton","border-width",2);
+setProperty("computerprogrammingButton","border-width",0);
+setProperty("benefitsandrisksButton","border-width",0);
+
+playSound("chilled-acoustic-indie-folk-instrumental-background-music-for-videos-5720-(1).mp3");
+});
+//Switch from the homeScreen to the benefitsandrisksScreen and play music while on that screen.
+onEvent("benefitsandrisksButton", "click", function( ) {
+setScreen("benefitsandrisksScreen");
+setProperty("componentsButton","border-width",2);
+setProperty("computerprogrammingButton","border-width",0);
+setProperty("benefitsandrisksButton","border-width",0);
+
+playSound("watching-the-stars-background-music-for-video-8756.mp3");
+});
+//Switch from the componentsScreen to the homeScreen and stop playing music
+onEvent("componentsscreenBackButton", "click", function( ) {
+stopSound();
+setScreen("homeScreen");
+});
+//Switch from the computerprogrammingScreen to the homeScreen and stop playing music
+onEvent("computerprogrammingBackButton", "click", function( ) {
+stopSound();
+setScreen("homeScreen");
+});
+//Switch from the benefitsandrisksScreen to the homeScreen and stop playing music
+onEvent("benefitsandrisksBackButton", "click", function( ) {
+stopSound();
+setScreen("homeScreen");
+});
+//Switch from the homeScreen to question1
+onEvent("quizButton", "click", function( ) {
+setScreen("question1");
+});
+//Wrong answer. Go back to homeScreen
+onEvent("quiz1option1", "click", function( ) {
+setScreen("homeScreen");
+});
+//Correct answer. Go to question2
+onEvent("quiz1option2", "click", function( ) {
+setScreen("question2");
+});
+//Wrong answer. Go back to homeScreen
+onEvent("quiz1option3", "click", function( ) {
+setScreen("homeScreen");
+});
+//Wrong answer. Go back to homeScreen
+onEvent("quiz1option4", "click", function( ) {
+setScreen("homeScreen");
+});
+//Wrong answer. Go back to homeScreen
+onEvent("quiz2option1", "click", function( ) {
+setScreen("homeScreen");
+});
+//Wrong answer. Go back to homeScreen
+onEvent("quiz2option2", "click", function( ) {
+setScreen("homeScreen");
+});
+//Wrong answer. Go back to homeScreen
+onEvent("quiz2option3", "click", function( ) {
+setScreen("homeScreen");
+});
+//Correct answer. Go to congratulationsScreen
+onEvent("quiz2option4", "click", function( ) {
+setScreen("congratulationsScreen");
+});
+//After Quiz, return back to homeScreen
+onEvent("congratulationsBackButton", "click", function( ) {
+setScreen("homeScreen");
+});
